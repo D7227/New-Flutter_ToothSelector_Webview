@@ -1,0 +1,355 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold text-foreground;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
+  }
+
+  p {
+    @apply mb-4 text-base;
+  }
+
+  a {
+    @apply text-brand-accent hover:underline;
+  }
+}
+
+@layer components {
+  /* Layout Components */
+  .main-layout {
+    @apply min-h-screen bg-background;
+  }
+
+  .content-area {
+    @apply flex-1 p-6 overflow-auto;
+  }
+
+  /* Page Header Styles */
+  .page-header {
+    @apply flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6;
+  }
+
+  .page-header-content {
+    @apply space-y-1;
+  }
+
+  .page-title {
+    @apply text-3xl font-bold text-foreground;
+  }
+
+  .page-subtitle {
+    @apply text-muted-foreground text-base;
+  }
+
+  .page-action {
+    @apply btn-primary hover-lift focus-ring flex items-center gap-2;
+  }
+
+  /* Grid Layouts */
+  .stats-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+
+  .orders-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6;
+  }
+
+  .cards-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-6;
+  }
+
+  .form-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .checkbox-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-3;
+  }
+
+  /* Card Components */
+  .card {
+    @apply bg-card text-card-foreground rounded-lg border border-border shadow-sm transition-shadow duration-200;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply text-2xl font-semibold leading-none tracking-tight;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .btn-outline {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+  }
+
+  .btn-sm {
+    @apply h-9 rounded-md px-3;
+  }
+
+  .btn-lg {
+    @apply h-11 rounded-md px-8;
+  }
+
+  /* Input Components */
+  .input-field {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Form Components */
+  .form-stack {
+    @apply space-y-4;
+  }
+
+  .form-field {
+    @apply space-y-2;
+  }
+
+  .form-label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .checkbox-item {
+    @apply flex items-center space-x-2;
+  }
+
+  .checkbox-label {
+    @apply text-sm;
+  }
+
+  .checkbox-group {
+    @apply flex flex-col gap-3;
+  }
+
+  /* Modal Components */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4;
+  }
+
+  .modal-container {
+    @apply bg-card rounded-lg shadow-xl w-full max-h-[90vh] overflow-y-auto;
+  }
+
+  .modal-lg {
+    @apply max-w-2xl;
+  }
+
+  .modal-header {
+    @apply p-6 border-b border-border flex items-center justify-between;
+  }
+
+  .modal-header-content {
+    @apply flex items-center justify-between w-full;
+  }
+
+  .modal-title-section {
+    @apply space-y-1;
+  }
+
+  .modal-title {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  .modal-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .modal-content {
+    @apply p-6 space-y-6;
+  }
+
+  .modal-footer {
+    @apply flex gap-3 pt-4 border-t border-border;
+  }
+
+  /* Upload Components */
+  .upload-zone {
+    @apply border-2 border-dashed border-brand-accent/30 rounded-lg p-6 text-center hover:border-brand-accent/50 transition-colors cursor-pointer;
+  }
+
+  .upload-icon {
+    @apply mx-auto text-brand-accent mb-2;
+  }
+
+  .upload-text {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .upload-link {
+    @apply text-brand-accent cursor-pointer hover:underline;
+  }
+
+  .upload-hint {
+    @apply text-xs text-muted-foreground mt-1;
+  }
+
+  /* Invoice Components */
+  .invoice-list {
+    @apply space-y-4;
+  }
+
+  .invoice-card {
+    @apply flex items-center justify-between p-4;
+  }
+
+  .invoice-info {
+    @apply space-y-1;
+  }
+
+  .invoice-header {
+    @apply flex items-center gap-2;
+  }
+
+  .invoice-id {
+    @apply font-medium text-foreground;
+  }
+
+  .invoice-date {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .invoice-amount {
+    @apply font-semibold text-foreground;
+  }
+
+  .invoice-actions {
+    @apply flex gap-2;
+  }
+
+  /* Receipt Components */
+  .receipt-container {
+    @apply space-y-4;
+  }
+
+  .receipt-details {
+    @apply bg-muted/30 p-4 space-y-3;
+  }
+
+  .receipt-row {
+    @apply flex justify-between;
+  }
+
+  .receipt-label {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .receipt-value {
+    @apply font-medium text-foreground;
+  }
+
+  /* Utility Classes */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  .clinical-gradient {
+    @apply bg-gradient-to-br from-brand-secondary to-white;
+  }
+
+  .clinical-shadow {
+    @apply shadow-card;
+  }
+
+  /* Empty State */
+  .empty-state {
+    @apply text-center py-16;
+  }
+
+  .empty-state-icon {
+    @apply mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-semibold text-foreground mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-sm text-muted-foreground;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Dark Mode Adjustments */
+.dark {
+  .clinical-gradient {
+    @apply bg-gradient-to-br from-gray-900 to-gray-800;
+  }
+  
+  .upload-zone {
+    @apply bg-card/50;
+  }
+}
