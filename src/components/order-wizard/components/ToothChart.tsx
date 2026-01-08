@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ToothGroup } from '../types/tooth';
+import { TOOTH_CHART_COLORS } from '../toothConstants';
 
 interface SelectedTooth {
   toothNumber: number;
@@ -295,31 +296,26 @@ const ToothChart = ({
   // Get tooth fill color based on selection state
   const getToothFillColor = (toothNumber: number): string => {
     const type = getToothType(toothNumber);
-    if (!type) return 'white';
+    if (!type) return TOOTH_CHART_COLORS.defaultFill;
 
     // Check if tooth is in a group
     const group = selectedGroups.find(g => g.teeth.includes(toothNumber));
     if (group) {
-      if (type === 'pontic') return '#9333EA'; // purple for pontics
-      return group.type === 'joint' ? '#10B981' : '#F59E0B'; // green for joint, orange for bridge
+      if (type === 'pontic') return TOOTH_CHART_COLORS.pontic;
+      return group.type === 'joint' ? TOOTH_CHART_COLORS.joint : TOOTH_CHART_COLORS.bridge;
     }
 
     // Individual teeth
-    return type === 'pontic' ? '#9333EA' : '#3B82F6'; // purple for pontic, blue for abutment
+    return type === 'pontic' ? TOOTH_CHART_COLORS.pontic : TOOTH_CHART_COLORS.abutment;
   };
 
   // Get tooth stroke color
   const getToothStrokeColor = (toothNumber: number): string => {
     const type = getToothType(toothNumber);
-    if (!type) return '#000';
+    if (!type) return TOOTH_CHART_COLORS.defaultStroke;
 
-    const group = selectedGroups.find(g => g.teeth.includes(toothNumber));
-    if (group) {
-      if (type === 'pontic') return '#7C3AED';
-      return group.type === 'joint' ? '#059669' : '#D97706';
-    }
-
-    return type === 'pontic' ? '#7C3AED' : '#1D4ED8';
+    // Selected teeth always use the selected stroke color
+    return TOOTH_CHART_COLORS.selectedStroke;
   };
 
   // Get tooth position for dot placement
@@ -579,7 +575,7 @@ const ToothChart = ({
         if (areTeethStrictlyAdjacent(tooth1, tooth2)) {
           const pos1 = getDotPosition(tooth1);
           const pos2 = getDotPosition(tooth2);
-          const lineColor = group.type === 'joint' ? '#10B981' : '#F59E0B';
+          const lineColor = group.type === 'joint' ? TOOTH_CHART_COLORS.joint : TOOTH_CHART_COLORS.bridge;
           const strokeWidth = group.type === 'bridge' ? '4' : '3';
           const lineId = `${group.groupId}-${tooth1}-${tooth2}`;
           const isHovered = hoveredLine === lineId;
@@ -591,7 +587,7 @@ const ToothChart = ({
               y1={pos1.y}
               x2={pos2.x}
               y2={pos2.y}
-              stroke={isHovered ? '#ef4444' : lineColor}
+              stroke={isHovered ? TOOTH_CHART_COLORS.validation.error : lineColor}
               strokeWidth={isHovered ? '6' : strokeWidth}
               strokeLinecap="round"
               className="cursor-pointer drop-shadow-sm hover:drop-shadow-lg transition-all duration-200"
@@ -612,7 +608,7 @@ const ToothChart = ({
         if (!existingLine && areTeethStrictlyAdjacent(11, 21)) {
           const pos1 = getDotPosition(11);
           const pos2 = getDotPosition(21);
-          const lineColor = group.type === 'joint' ? '#10B981' : '#F59E0B';
+          const lineColor = group.type === 'joint' ? TOOTH_CHART_COLORS.joint : TOOTH_CHART_COLORS.bridge;
           const strokeWidth = group.type === 'bridge' ? '4' : '3';
           const lineId = `${group.groupId}-11-21`;
           const isHovered = hoveredLine === lineId;
@@ -624,7 +620,7 @@ const ToothChart = ({
               y1={pos1.y}
               x2={pos2.x}
               y2={pos2.y}
-              stroke={isHovered ? '#ef4444' : lineColor}
+              stroke={isHovered ? TOOTH_CHART_COLORS.validation.error : lineColor}
               strokeWidth={isHovered ? '6' : strokeWidth}
               strokeLinecap="round"
               className="cursor-pointer drop-shadow-sm hover:drop-shadow-lg transition-all duration-200"
@@ -644,7 +640,7 @@ const ToothChart = ({
         if (!existingLine && areTeethStrictlyAdjacent(31, 41)) {
           const pos1 = getDotPosition(31);
           const pos2 = getDotPosition(41);
-          const lineColor = group.type === 'joint' ? '#10B981' : '#F59E0B';
+          const lineColor = group.type === 'joint' ? TOOTH_CHART_COLORS.joint : TOOTH_CHART_COLORS.bridge;
           const strokeWidth = group.type === 'bridge' ? '4' : '3';
           const lineId = `${group.groupId}-31-41`;
           const isHovered = hoveredLine === lineId;
@@ -656,7 +652,7 @@ const ToothChart = ({
               y1={pos1.y}
               x2={pos2.x}
               y2={pos2.y}
-              stroke={isHovered ? '#ef4444' : lineColor}
+              stroke={isHovered ? TOOTH_CHART_COLORS.validation.error : lineColor}
               strokeWidth={isHovered ? '6' : strokeWidth}
               strokeLinecap="round"
               className="cursor-pointer drop-shadow-sm hover:drop-shadow-lg transition-all duration-200"
@@ -698,7 +694,7 @@ const ToothChart = ({
           y1={pos1.y}
           x2={pos2.x}
           y2={pos2.y}
-          stroke="#666"
+          stroke={TOOTH_CHART_COLORS.connectionLine.temporary}
           strokeWidth="2"
           strokeDasharray="4,4"
           strokeLinecap="round"
@@ -1094,8 +1090,8 @@ const ToothChart = ({
               cx={pos.x}
               cy={pos.y}
               r={isTouchActive ? dotHoverRadius : (isHovered ? dotHoverRadius : dotRadius)}
-              fill={isInChain ? "#666" : "#3B82F6"}
-              stroke={isTouchActive ? '#f59e42' : 'white'}
+              fill={isInChain ? TOOTH_CHART_COLORS.connectionLine.temporary : TOOTH_CHART_COLORS.validation.info}
+              stroke={isTouchActive ? TOOTH_CHART_COLORS.validation.warning : TOOTH_CHART_COLORS.defaultFill}
               strokeWidth={isTouchActive ? 4 : 2}
               className="cursor-pointer transition-all duration-200"
               onMouseDown={readMode ? undefined : (e) => handleDotMouseDown(tooth.toothNumber, e)}
@@ -1120,7 +1116,7 @@ const ToothChart = ({
             y1={getDotPosition(dragStart).y}
             x2={mousePosition.x}
             y2={mousePosition.y}
-            stroke="#666"
+            stroke={TOOTH_CHART_COLORS.connectionLine.temporary}
             strokeWidth="2"
             strokeDasharray="6,3"
             strokeLinecap="round"
@@ -1135,7 +1131,7 @@ const ToothChart = ({
             y1={dragLine.y1}
             x2={dragLine.x2}
             y2={dragLine.y2}
-            stroke="#3B82F6"
+            stroke={TOOTH_CHART_COLORS.validation.info}
             strokeWidth="3"
             strokeLinecap="round"
             className="pointer-events-none"

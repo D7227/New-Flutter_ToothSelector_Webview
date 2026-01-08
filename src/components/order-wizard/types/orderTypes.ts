@@ -12,8 +12,12 @@ export type PrescriptionType =
   | "";
 
 export interface ShadeGuide {
-  type: "anterior" | "posterior";
+  type: "anterior" | "posterior" | "both";
   shades: string[];
+  anteriorShades?: string[];
+  posteriorShades?: string[];
+  shadeSystem?: "VITA" | "IPS" | "Custom";
+  matchingNotes?: string;
 }
 
 export interface Product {
@@ -23,6 +27,19 @@ export interface Product {
   material: string;
   description: string;
   quantity: number;
+  prescriptionType?: string;
+  prescriptionTypeId?: string;
+  subPrescriptionId?: string;
+  subPrescriptionIds?: string[];
+  manufacturer?: string;
+  sku?: string;
+  price?: number;
+  materialProperties?: {
+    strength?: string;
+    translucency?: string;
+    indication?: string;
+  };
+  compatibleWith?: string[]; // Compatible prescription types
 }
 
 export interface SelectedTooth {
@@ -60,10 +77,21 @@ export interface ToothDetail {
     systemName: string;
     remarks: string;
     photo?: File;
+    diameter?: string;
+    length?: string;
+    platform?: string;
+    angulation?: string;
   };
+  positionInGroup?: number;
+  connectedTo?: number[];
+  isValid?: boolean;
+  validationErrors?: string[];
 }
 
 export interface ToothGroup {
+  // Unique identifier
+  groupId?: string;
+  
   groupType: "bridge" | "joint" | "separate" | "individual";
   prescriptionType: PrescriptionType;
   subcategoryType: string;
@@ -74,6 +102,9 @@ export interface ToothGroup {
   trialRequirements: string;
   selectedProducts: Product[];
   teethDetails: ToothDetail[][];
+  createdAt?: Date;
+  updatedAt?: Date;
+  warnings?: string[];
 }
 
 // Legacy interface for backward compatibility

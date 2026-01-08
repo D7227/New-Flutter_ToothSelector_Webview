@@ -140,7 +140,7 @@ const SelectedToothGroups = ({
 
       {/* Individual Teeth */}
       {selectedTeeth.length > 0 && (
-        <Card className="border border-[#1D4ED8] bg-[#4574F9]">
+        <Card className="border border-[#00707D] bg-[#008D9E]">
           <CardContent className="p-3">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm flex font-medium text-white items-center gap-3"> {prescriptionType === 'implant' ? <img src={ImplantSeparate} alt="Implant Bridge" className="w-12 h-12 " /> : <img src={CrownSeparate} alt="Crown Bridge" className="w-12 h-12 " />} Individual Teeth</span>
@@ -195,7 +195,7 @@ const SelectedToothGroups = ({
 
       {/* Groups */}
       {selectedGroups.map(group => {
-        const bgColor = group.type === 'joint' ? 'bg-[#0B8043] border-[#10A457]' : 'bg-[#EA580C] border-[#FF7730]';
+        const bgColor = group.type === 'joint' ? 'bg-[#069997] border-[#069997]' : 'bg-[#4FA2D9] border-[#3E83B0]';
 
         return (
           <Card key={group.groupId} className={`border ${bgColor}`}>
@@ -227,7 +227,7 @@ const SelectedToothGroups = ({
                     <div
                       key={toothNumber}
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${isPontic
-                          ? 'bg-[#231F20] text-white'
+                          ? 'bg-[#A7A9AC] text-white'
                           : 'bg-white'
                         }`}
                     >
